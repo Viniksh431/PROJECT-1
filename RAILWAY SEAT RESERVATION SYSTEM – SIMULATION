@@ -1,0 +1,106 @@
+#include <iostream>
+using namespace std;
+
+#define MAX_SEATS 20
+
+int seats[MAX_SEATS];
+
+void displaySeats() {
+    cout << "\nSeat Status (0 = Available, 1 = Booked):\n";
+    for (int i = 0; i < MAX_SEATS; i++) {
+        cout << "Seat " << i + 1 << ": " << seats[i] << endl;
+    }
+}
+
+void bookSeat() {
+    int seatNumber;
+    cout << "\nEnter seat number to book (1-20): ";
+    cin >> seatNumber;
+
+    if (seatNumber < 1 || seatNumber > MAX_SEATS) {
+        cout << "Invalid Seat Number!" << endl;
+        return;
+    }
+
+    if (seats[seatNumber - 1] == 0) {
+        seats[seatNumber - 1] = 1;
+        cout << "Seat " << seatNumber << " booked successfully!" << endl;
+    } else {
+        cout << "Seat already booked! Try another." << endl;
+    }
+}
+
+void cancelSeat() {
+    int seatNumber;
+    cout << "\nEnter seat number to cancel (1-20): ";
+    cin >> seatNumber;
+
+    if (seatNumber < 1 || seatNumber > MAX_SEATS) {
+        cout << "Invalid Seat Number!" << endl;
+        return;
+    }
+
+    if (seats[seatNumber - 1] == 1) {
+        seats[seatNumber - 1] = 0;
+        cout << "Seat " << seatNumber << " cancelled successfully!" << endl;
+    } else {
+        cout << "Seat is not booked!" << endl;
+    }
+}
+
+void showAvailableSeats() {
+    int count = 0;
+    cout << "\nAvailable Seats:\n";
+    for (int i = 0; i < MAX_SEATS; i++) {
+        if (seats[i] == 0) {
+            cout << "Seat " << i + 1 << endl;
+            count++;
+        }
+    }
+    if (count == 0) {
+        cout << "No seats available!" << endl;
+    }
+}
+
+int main() {
+    int choice;
+
+    for (int i = 0; i < MAX_SEATS; i++) {
+        seats[i] = 0;
+    }
+
+    do {
+        cout << "\n\n=== RAILWAY SEAT RESERVATION SYSTEM ===\n";
+        cout << "1. Book a Seat\n";
+        cout << "2. Cancel a Seat\n";
+        cout << "3. Display All Seats\n";
+        cout << "4. Show Available Seats\n";
+        cout << "5. Exit\n";
+
+        cout << "\nEnter your choice: ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1:
+                bookSeat();
+                break;
+            case 2:
+                cancelSeat();
+                break;
+            case 3:
+                displaySeats();
+                break;
+            case 4:
+                showAvailableSeats();
+                break;
+            case 5:
+                cout << "Exiting the system. Thank you!" << endl;
+                break;
+            default:
+                cout << "Invalid choice! Try again." << endl;
+        }
+
+    } while (choice != 5);
+
+    return 0;
+}
